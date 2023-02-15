@@ -1,3 +1,4 @@
+import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flutter/material.dart';
 import 'package:speech_to_text/speech_recognition_error.dart';
 import 'package:speech_to_text/speech_recognition_result.dart';
@@ -104,11 +105,23 @@ class _ListenWidgetState extends State<ListenWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return FloatingActionButton(
-      onPressed:
-          _speechToText.isNotListening ? _startListening : _stopListening,
-      tooltip: 'Listen',
-      child: Icon(_speechToText.isNotListening ? Icons.mic_off : Icons.mic),
+    return GestureDetector(
+      onTap: _speechToText.isNotListening ? _startListening : _stopListening,
+      child: AvatarGlow(
+          animate: !_speechEnabled ? false : true,
+          repeat: true,
+          glowColor: Colors.blue,
+          endRadius: 100.0,
+          duration: const Duration(seconds: 2),
+          child: Material(
+            borderRadius: BorderRadius.circular(50),
+            elevation: !_speechEnabled ? 0 : 10,
+            child: const CircleAvatar(
+              backgroundColor: Colors.blue,
+              radius: 45,
+              child: Text("Speak!"),
+            ),
+          )),
     );
   }
 }
